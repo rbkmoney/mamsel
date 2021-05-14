@@ -2,7 +2,6 @@ package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.LegacyMobileOperator;
 import com.rbkmoney.damsel.domain.MobileCommerce;
-import com.rbkmoney.damsel.domain.MobileCommerceConditionDefinition;
 import com.rbkmoney.damsel.domain.MobileOperatorRef;
 
 import javax.validation.constraints.NotNull;
@@ -36,7 +35,7 @@ public class MobileOperatorUtil {
             LegacyMobileOperator legacyMobileOperator) {
         return Optional.ofNullable(mobileOperatorRef)
                 .map(MobileOperatorRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> Optional.ofNullable(legacyMobileOperator)
                         .map(Enum::name));
     }

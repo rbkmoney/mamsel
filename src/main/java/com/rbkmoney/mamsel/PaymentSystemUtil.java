@@ -2,10 +2,8 @@ package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.LegacyBankCardPaymentSystem;
-import com.rbkmoney.damsel.domain.PaymentSystemCondition;
 import com.rbkmoney.damsel.domain.PaymentSystemRef;
 import com.rbkmoney.damsel.payment_tool_provider.CardInfo;
-import com.rbkmoney.mamsel.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -42,7 +40,7 @@ public class PaymentSystemUtil {
             LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
         return Optional.ofNullable(paymentSystemRef)
                 .map(PaymentSystemRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> Optional.ofNullable(legacyBankCardPaymentSystem)
                         .map(Enum::name));
     }

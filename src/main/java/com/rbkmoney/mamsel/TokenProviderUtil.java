@@ -35,7 +35,7 @@ public class TokenProviderUtil {
             LegacyBankCardTokenProvider legacyBankCardTokenProvider) {
         return Optional.ofNullable(bankCardTokenServiceRef)
                 .map(BankCardTokenServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> Optional.ofNullable(legacyBankCardTokenProvider)
                         .map(Enum::name));
     }

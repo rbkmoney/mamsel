@@ -9,7 +9,7 @@ public class StringUtils {
      * Checks if string is null or empty.
      * @param s input string
      */
-    static boolean isBlank(String s) {
+    static boolean isEmpty(String s) {
         return s == null || s.isEmpty();
     }
 }

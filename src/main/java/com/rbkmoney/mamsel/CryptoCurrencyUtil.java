@@ -1,7 +1,6 @@
 package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.*;
-import com.rbkmoney.mamsel.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -33,7 +32,7 @@ public class CryptoCurrencyUtil {
                 .filter(PaymentTool::isSetCryptoCurrency)
                 .map(PaymentTool::getCryptoCurrency)
                 .map(CryptoCurrencyRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> tool
                         .filter(PaymentTool::isSetCryptoCurrencyDeprecated)
                         .map(PaymentTool::getCryptoCurrencyDeprecated)
@@ -52,7 +51,7 @@ public class CryptoCurrencyUtil {
             LegacyCryptoCurrency legacyCryptoCurrency) {
         return Optional.ofNullable(cryptoCurrencyRef)
                 .map(CryptoCurrencyRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> Optional.ofNullable(legacyCryptoCurrency)
                         .map(Enum::name));
     }

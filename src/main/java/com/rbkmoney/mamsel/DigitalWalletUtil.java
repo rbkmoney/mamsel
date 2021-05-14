@@ -35,7 +35,7 @@ public class DigitalWalletUtil {
             LegacyDigitalWalletProvider legacyDigitalWalletProvider) {
         return Optional.ofNullable(paymentServiceRef)
                 .map(PaymentServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> Optional.ofNullable(legacyDigitalWalletProvider)
                         .map(Enum::name));
     }

@@ -3,8 +3,6 @@ package com.rbkmoney.mamsel;
 import com.rbkmoney.damsel.domain.LegacyTerminalPaymentProvider;
 import com.rbkmoney.damsel.domain.PaymentServiceRef;
 import com.rbkmoney.damsel.domain.PaymentTerminal;
-import com.rbkmoney.damsel.domain.PaymentTerminalConditionDefinition;
-import com.rbkmoney.mamsel.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -39,7 +37,7 @@ public class TerminalPaymentUtil {
             LegacyTerminalPaymentProvider legacyTerminalPaymentProvider) {
         return Optional.ofNullable(paymentServiceRef)
                 .map(PaymentServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
+                .filter(Predicate.not(StringUtils::isEmpty))
                 .or(() -> Optional.ofNullable(legacyTerminalPaymentProvider)
                         .map(Enum::name));
     }
