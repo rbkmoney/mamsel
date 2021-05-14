@@ -21,33 +21,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CryptoCurrencyUtilTest {
 
     @Test
-    void getCryptoCurrencyNameTest_PaymentMethod() {
-        PaymentMethod nullMethod = null;
-        assertThrows(NullPointerException.class, () -> getCryptoCurrencyName(nullMethod));
-
-        PaymentMethod method = new PaymentMethod();
-        assertNull(getCryptoCurrencyName(method));
-
-        method.setCryptoCurrency(new CryptoCurrencyRef(REF));
-        assertEquals(REF, getCryptoCurrencyName(method));
-
-        method.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(method));
-    }
-
-    @Test
     void getCryptoCurrencyNameTest_PaymentTool() {
         PaymentTool nullMethod = null;
         assertThrows(NullPointerException.class, () -> getCryptoCurrencyName(nullMethod));
 
         PaymentTool tool = new PaymentTool();
-        assertNull(getCryptoCurrencyName(tool));
+        assertTrue(getCryptoCurrencyName(tool).isEmpty());
 
         tool.setCryptoCurrency(new CryptoCurrencyRef(REF));
-        assertEquals(REF, getCryptoCurrencyName(tool));
+        assertEquals(REF, getCryptoCurrencyName(tool).get());
 
         tool.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(tool));
+        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(tool).get());
     }
 
     @Test
@@ -56,18 +41,18 @@ class CryptoCurrencyUtilTest {
         assertThrows(NullPointerException.class, () -> getCryptoCurrencyName(nullWallet));
 
         CryptoWallet commerce = new CryptoWallet();
-        assertNull(getCryptoCurrencyName(commerce));
+        assertTrue(getCryptoCurrencyName(commerce).isEmpty());
 
         commerce.setCryptoCurrency(new CryptoCurrencyRef(REF));
-        assertEquals(REF, getCryptoCurrencyName(commerce));
+        assertEquals(REF, getCryptoCurrencyName(commerce).get());
 
         commerce.setCryptoCurrency(null);
         commerce.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(commerce));
+        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(commerce).get());
 
         commerce.setCryptoCurrency(new CryptoCurrencyRef(REF));
         commerce.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertEquals(REF, getCryptoCurrencyName(commerce));
+        assertEquals(REF, getCryptoCurrencyName(commerce).get());
     }
 
     @Test
@@ -76,56 +61,40 @@ class CryptoCurrencyUtilTest {
         assertThrows(NullPointerException.class, () -> getCryptoCurrencyName(nullDefinition));
 
         CryptoCurrencyConditionDefinition definition = new CryptoCurrencyConditionDefinition();
-        assertNull(getCryptoCurrencyName(definition));
+        assertTrue(getCryptoCurrencyName(definition).isEmpty());
 
         definition.setCryptoCurrencyIs(new CryptoCurrencyRef(REF));
-        assertEquals(REF, getCryptoCurrencyName(definition));
+        assertEquals(REF, getCryptoCurrencyName(definition).get());
 
         definition.setCryptoCurrencyIsDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(definition));
+        assertEquals(LegacyCryptoCurrency.bitcoin.name(), getCryptoCurrencyName(definition).get());
     }
 
     @Test
     void getCryptoCurrencyNameTest() {
-        assertNull(getCryptoCurrencyName(null, null));
-        assertNull(getCryptoCurrencyName(new CryptoCurrencyRef(), null));
-        assertNull(getCryptoCurrencyName(new CryptoCurrencyRef(EMPTY), null));
+        assertTrue(getCryptoCurrencyName(null, null).isEmpty());
+        assertTrue(getCryptoCurrencyName(new CryptoCurrencyRef(), null).isEmpty());
+        assertTrue(getCryptoCurrencyName(new CryptoCurrencyRef(EMPTY), null).isEmpty());
         assertEquals(
                 REF,
-                getCryptoCurrencyName(new CryptoCurrencyRef(REF), null)
+                getCryptoCurrencyName(new CryptoCurrencyRef(REF), null).get()
         );
         assertEquals(
                 REF,
-                getCryptoCurrencyName(new CryptoCurrencyRef(REF), LegacyCryptoCurrency.bitcoin)
+                getCryptoCurrencyName(new CryptoCurrencyRef(REF), LegacyCryptoCurrency.bitcoin).get()
         );
         assertEquals(
                 LegacyCryptoCurrency.bitcoin.name(),
-                getCryptoCurrencyName(null, LegacyCryptoCurrency.bitcoin)
+                getCryptoCurrencyName(null, LegacyCryptoCurrency.bitcoin).get()
         );
         assertEquals(
                 LegacyCryptoCurrency.bitcoin.name(),
-                getCryptoCurrencyName(new CryptoCurrencyRef(), LegacyCryptoCurrency.bitcoin)
+                getCryptoCurrencyName(new CryptoCurrencyRef(), LegacyCryptoCurrency.bitcoin).get()
         );
         assertEquals(
                 LegacyCryptoCurrency.bitcoin.name(),
-                getCryptoCurrencyName(new CryptoCurrencyRef(EMPTY), LegacyCryptoCurrency.bitcoin)
+                getCryptoCurrencyName(new CryptoCurrencyRef(EMPTY), LegacyCryptoCurrency.bitcoin).get()
         );
-    }
-
-    @Test
-    void isSetCryptoCurrencyTest_PaymentMethod() {
-        PaymentMethod nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetCryptoCurrency(nullObj));
-
-        PaymentMethod method = new PaymentMethod();
-        assertFalse(isSetCryptoCurrency(method));
-
-        method.setCryptoCurrency(new CryptoCurrencyRef(REF));
-        assertTrue(isSetCryptoCurrency(method));
-
-        method = new PaymentMethod();
-        method.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertTrue(isSetCryptoCurrency(method));
     }
 
     @Test

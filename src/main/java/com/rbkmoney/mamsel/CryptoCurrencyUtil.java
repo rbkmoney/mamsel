@@ -1,88 +1,75 @@
 package com.rbkmoney.mamsel;
 
-import com.rbkmoney.damsel.domain.CryptoCurrencyConditionDefinition;
-import com.rbkmoney.damsel.domain.CryptoCurrencyRef;
-import com.rbkmoney.damsel.domain.CryptoWallet;
-import com.rbkmoney.damsel.domain.LegacyCryptoCurrency;
-import com.rbkmoney.damsel.domain.PaymentMethod;
-import com.rbkmoney.damsel.domain.PaymentTool;
+import com.rbkmoney.damsel.domain.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
-
-import static com.rbkmoney.mamsel.Util.isEmpty;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Utility class to help with former CryptoCurrency.<br>
  * It can have values in two fields: <br>
- *  -> CryptoCurrencyRef <br>
- *  -> LegacyCryptoCurrency
+ * -> CryptoCurrencyRef <br>
+ * -> LegacyCryptoCurrency
  */
 public class CryptoCurrencyUtil {
 
     private CryptoCurrencyUtil() {
     }
 
-    public static String getCryptoCurrencyName(@NotNull CryptoWallet wallet) {
-        return getCryptoCurrencyName(wallet.getCryptoCurrency(), wallet.getCryptoCurrencyDeprecated());
+    public static Optional<String> getCryptoCurrencyName(@NotNull CryptoWallet cryptoWallet) {
+        return getCryptoCurrencyName(cryptoWallet.getCryptoCurrency(), cryptoWallet.getCryptoCurrencyDeprecated());
     }
 
-    public static String getCryptoCurrencyName(@NotNull PaymentTool tool) {
-        if (tool.isSetCryptoCurrency()) {
-            return tool.getCryptoCurrency().getId();
-        }
-        if (tool.isSetCryptoCurrencyDeprecated()) {
-            return tool.getCryptoCurrencyDeprecated().name();
-        }
-        return null;
+    public static Optional<String> getCryptoCurrencyName(@NotNull PaymentTool paymentTool) {
+        Optional<PaymentTool> tool = Optional.of(paymentTool);
+        return tool
+                .filter(PaymentTool::isSetCryptoCurrency)
+                .map(PaymentTool::getCryptoCurrency)
+                .map(CryptoCurrencyRef::getId)
+                .filter(Predicate.not(StringUtils::isBlank))
+                .or(() -> tool
+                        .filter(PaymentTool::isSetCryptoCurrencyDeprecated)
+                        .map(PaymentTool::getCryptoCurrencyDeprecated)
+                        .map(Enum::name));
     }
 
-    public static String getCryptoCurrencyName(@NotNull PaymentMethod method) {
-        if (method.isSetCryptoCurrency()) {
-            return method.getCryptoCurrency().getId();
-        }
-        if (method.isSetCryptoCurrencyDeprecated()) {
-            return method.getCryptoCurrencyDeprecated().name();
-        }
-
-        return null;
+    public static Optional<String> getCryptoCurrencyName(
+            @NotNull CryptoCurrencyConditionDefinition cryptoCurrencyConditionDefinition) {
+        Optional<CryptoCurrencyConditionDefinition> definition = Optional.of(cryptoCurrencyConditionDefinition);
+        return definition
+                .filter(CryptoCurrencyConditionDefinition::isSetCryptoCurrencyIs)
+                .map(CryptoCurrencyConditionDefinition::getCryptoCurrencyIs)
+                .map(CryptoCurrencyRef::getId)
+                .filter(Predicate.not(StringUtils::isBlank))
+                .or(() -> definition
+                        .filter(CryptoCurrencyConditionDefinition::isSetCryptoCurrencyIsDeprecated)
+                        .map(CryptoCurrencyConditionDefinition::getCryptoCurrencyIsDeprecated)
+                        .map(Enum::name));
     }
 
-    public static String getCryptoCurrencyName(@NotNull CryptoCurrencyConditionDefinition definition) {
-        if (definition.isSetCryptoCurrencyIs()) {
-            return definition.getCryptoCurrencyIs().getId();
-        }
-        if (definition.isSetCryptoCurrencyIsDeprecated()) {
-            return definition.getCryptoCurrencyIsDeprecated().name();
-        }
-
-        return null;
+    public static Optional<String> getCryptoCurrencyName(
+            CryptoCurrencyRef cryptoCurrencyRef,
+            LegacyCryptoCurrency legacyCryptoCurrency) {
+        return Optional.ofNullable(cryptoCurrencyRef)
+                .map(CryptoCurrencyRef::getId)
+                .filter(Predicate.not(StringUtils::isBlank))
+                .or(() -> Optional.ofNullable(legacyCryptoCurrency)
+                        .map(Enum::name));
     }
 
-    public static String getCryptoCurrencyName(CryptoCurrencyRef cryptoCurrency,
-                                               LegacyCryptoCurrency cryptoCurrencyDeprecated) {
-        if (cryptoCurrency != null && !isEmpty(cryptoCurrency.getId())) {
-            return cryptoCurrency.getId();
-        }
-        if (cryptoCurrencyDeprecated != null) {
-            return cryptoCurrencyDeprecated.name();
-        }
-        return null;
+    public static boolean isSetCryptoCurrency(@NotNull CryptoWallet cryptoWallet) {
+        return cryptoWallet.isSetCryptoCurrency() || cryptoWallet.isSetCryptoCurrencyDeprecated();
     }
 
-    public static boolean isSetCryptoCurrency(@NotNull CryptoWallet wallet) {
-        return wallet.isSetCryptoCurrency() || wallet.isSetCryptoCurrencyDeprecated();
+    public static boolean isSetCryptoCurrency(@NotNull PaymentTool paymentTool) {
+        return paymentTool.isSetCryptoCurrency() || paymentTool.isSetCryptoCurrencyDeprecated();
     }
 
-    public static boolean isSetCryptoCurrency(@NotNull PaymentMethod method) {
-        return method.isSetCryptoCurrency() || method.isSetCryptoCurrencyDeprecated();
+    public static boolean isSetCryptoCurrency(
+            @NotNull CryptoCurrencyConditionDefinition cryptoCurrencyConditionDefinition) {
+        return cryptoCurrencyConditionDefinition.isSetCryptoCurrencyIs()
+                || cryptoCurrencyConditionDefinition.isSetCryptoCurrencyIsDeprecated();
     }
-
-    public static boolean isSetCryptoCurrency(@NotNull CryptoCurrencyConditionDefinition definition) {
-        return definition.isSetCryptoCurrencyIs() || definition.isSetCryptoCurrencyIsDeprecated();
-    }
-
-    public static boolean isSetCryptoCurrency(@NotNull PaymentTool tool) {
-        return tool.isSetCryptoCurrency() || tool.isSetCryptoCurrencyDeprecated();
-    }
-
 }
