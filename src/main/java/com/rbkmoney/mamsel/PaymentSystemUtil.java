@@ -7,7 +7,6 @@ import com.rbkmoney.damsel.payment_tool_provider.CardInfo;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * Utility class to help with former BankCardPaymentSystem.<br>

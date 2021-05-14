@@ -6,7 +6,6 @@ import com.rbkmoney.damsel.domain.PaymentServiceRef;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * Utility class to help with former DigitalWalletProvider.<br>
