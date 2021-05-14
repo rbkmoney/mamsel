@@ -45,12 +45,4 @@ public class PaymentSystemUtil {
                         .map(Enum::name)
         );
     }
-
-    public static boolean isSetPaymentSystem(@NotNull BankCard bankCard) {
-        return bankCard.isSetPaymentSystem() || bankCard.isSetPaymentSystemDeprecated();
-    }
-
-    public static boolean isSetPaymentSystem(@NotNull CardInfo cardInfo) {
-        return cardInfo.isSetPaymentSystem() || cardInfo.isSetPaymentSystemDeprecated();
-    }
 }

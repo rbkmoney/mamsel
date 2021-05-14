@@ -42,8 +42,4 @@ public class TerminalPaymentUtil {
                         .map(Enum::name)
         );
     }
-
-    public static boolean isSetTerminalPaymentProvider(@NotNull PaymentTerminal paymentTerminal) {
-        return paymentTerminal.isSetPaymentService() || paymentTerminal.isSetTerminalTypeDeprecated();
-    }
 }

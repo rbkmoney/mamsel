@@ -2,20 +2,13 @@ package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.LegacyMobileOperator;
 import com.rbkmoney.damsel.domain.MobileCommerce;
-import com.rbkmoney.damsel.domain.MobileCommerceConditionDefinition;
 import com.rbkmoney.damsel.domain.MobileOperatorRef;
-import com.rbkmoney.damsel.domain.PaymentMethod;
 import org.junit.jupiter.api.Test;
 
-import static com.rbkmoney.mamsel.MobileOperatorUtil.isSetMobileOperatorName;
 import static com.rbkmoney.mamsel.MobileOperatorUtil.getMobileOperatorName;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MobileOperatorUtilTest {
 
@@ -64,21 +57,5 @@ class MobileOperatorUtilTest {
                 LegacyMobileOperator.mts.name(),
                 getMobileOperatorName(new MobileOperatorRef(EMPTY), LegacyMobileOperator.mts)
         );
-    }
-
-    @Test
-    void isSetMobileOperatorTest_MobileCommerce() {
-        MobileCommerce nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetMobileOperatorName(nullObj));
-
-        MobileCommerce commerce = new MobileCommerce();
-        assertFalse(isSetMobileOperatorName(commerce));
-
-        commerce.setOperator(new MobileOperatorRef(REF));
-        assertTrue(isSetMobileOperatorName(commerce));
-
-        commerce = new MobileCommerce();
-        commerce.setOperatorDeprecated(LegacyMobileOperator.mts);
-        assertTrue(isSetMobileOperatorName(commerce));
     }
 }

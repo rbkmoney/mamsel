@@ -8,7 +8,6 @@ import com.rbkmoney.damsel.domain.PaymentTerminalConditionDefinition;
 import org.junit.jupiter.api.Test;
 
 import static com.rbkmoney.mamsel.TerminalPaymentUtil.getTerminalPaymentProviderName;
-import static com.rbkmoney.mamsel.TerminalPaymentUtil.isSetTerminalPaymentProvider;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,21 +63,5 @@ class TerminalPaymentUtilTest {
                 LegacyTerminalPaymentProvider.uzcard.name(),
                 getTerminalPaymentProviderName(new PaymentServiceRef(EMPTY), LegacyTerminalPaymentProvider.uzcard)
         );
-    }
-
-    @Test
-    void isSetTerminalPaymentProviderTest_PaymentTerminal() {
-        PaymentTerminal nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetTerminalPaymentProvider(nullObj));
-
-        PaymentTerminal method = new PaymentTerminal();
-        assertFalse(isSetTerminalPaymentProvider(method));
-
-        method.setPaymentService(new PaymentServiceRef(REF));
-        assertTrue(isSetTerminalPaymentProvider(method));
-
-        method = new PaymentTerminal();
-        method.setTerminalTypeDeprecated(LegacyTerminalPaymentProvider.uzcard);
-        assertTrue(isSetTerminalPaymentProvider(method));
     }
 }

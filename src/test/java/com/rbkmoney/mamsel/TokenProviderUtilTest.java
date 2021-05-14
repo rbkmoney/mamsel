@@ -9,7 +9,6 @@ import com.rbkmoney.damsel.domain.TokenizedBankCard;
 import org.junit.jupiter.api.Test;
 
 import static com.rbkmoney.mamsel.TokenProviderUtil.getTokenProviderName;
-import static com.rbkmoney.mamsel.TokenProviderUtil.isSetTokenProvider;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,21 +67,5 @@ class TokenProviderUtilTest {
                 LegacyBankCardTokenProvider.yandexpay.name(),
                 getTokenProviderName(new BankCardTokenServiceRef(EMPTY), LegacyBankCardTokenProvider.yandexpay)
         );
-    }
-
-    @Test
-    void isSetTokenProviderTest_BankCard() {
-        BankCard nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetTokenProvider(nullObj));
-
-        BankCard card = new BankCard();
-        assertFalse(isSetTokenProvider(card));
-
-        card.setPaymentToken(new BankCardTokenServiceRef(REF));
-        assertTrue(isSetTokenProvider(card));
-
-        card = new BankCard();
-        card.setTokenProviderDeprecated(LegacyBankCardTokenProvider.yandexpay);
-        assertTrue(isSetTokenProvider(card));
     }
 }

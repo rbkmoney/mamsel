@@ -1,21 +1,14 @@
 package com.rbkmoney.mamsel;
 
-import com.rbkmoney.damsel.domain.LegacyDigitalWalletProvider;
 import com.rbkmoney.damsel.domain.DigitalWallet;
-import com.rbkmoney.damsel.domain.DigitalWalletConditionDefinition;
+import com.rbkmoney.damsel.domain.LegacyDigitalWalletProvider;
 import com.rbkmoney.damsel.domain.PaymentServiceRef;
-import com.rbkmoney.damsel.domain.PaymentMethod;
 import org.junit.jupiter.api.Test;
 
 import static com.rbkmoney.mamsel.DigitalWalletUtil.getDigitalWalletName;
-import static com.rbkmoney.mamsel.DigitalWalletUtil.isSetDigitalWallet;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DigitalWalletProviderUtilTest {
 
@@ -64,21 +57,5 @@ class DigitalWalletProviderUtilTest {
                 LegacyDigitalWalletProvider.rbkmoney.name(),
                 getDigitalWalletName(new PaymentServiceRef(EMPTY), LegacyDigitalWalletProvider.rbkmoney)
         );
-    }
-
-    @Test
-    void isSetDigitalWalletTest_DigitalWallet() {
-        DigitalWallet nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetDigitalWallet(nullObj));
-
-        DigitalWallet wallet = new DigitalWallet();
-        assertFalse(isSetDigitalWallet(wallet));
-
-        wallet.setPaymentService(new PaymentServiceRef(REF));
-        assertTrue(isSetDigitalWallet(wallet));
-
-        wallet = new DigitalWallet();
-        wallet.setProviderDeprecated(LegacyDigitalWalletProvider.rbkmoney);
-        assertTrue(isSetDigitalWallet(wallet));
     }
 }

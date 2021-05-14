@@ -40,8 +40,4 @@ public class TokenProviderUtil {
                         .map(Enum::name)
         );
     }
-
-    public static boolean isSetTokenProvider(@NotNull BankCard bankCard) {
-        return bankCard.isSetPaymentToken() || bankCard.isSetTokenProviderDeprecated();
-    }
 }

@@ -60,10 +60,6 @@ public class CryptoCurrencyUtil {
                         .map(Enum::name));
     }
 
-    public static boolean isSetCryptoCurrency(@NotNull CryptoWallet cryptoWallet) {
-        return cryptoWallet.isSetCryptoCurrency() || cryptoWallet.isSetCryptoCurrencyDeprecated();
-    }
-
     public static boolean isSetCryptoCurrency(@NotNull PaymentTool paymentTool) {
         return paymentTool.isSetCryptoCurrency() || paymentTool.isSetCryptoCurrencyDeprecated();
     }

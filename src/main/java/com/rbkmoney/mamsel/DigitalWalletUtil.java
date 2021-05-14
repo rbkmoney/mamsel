@@ -40,8 +40,4 @@ public class DigitalWalletUtil {
                         .map(Enum::name)
         );
     }
-
-    public static boolean isSetDigitalWallet(@NotNull DigitalWallet digitalWallet) {
-        return digitalWallet.isSetPaymentService() || digitalWallet.isSetProviderDeprecated();
-    }
 }

@@ -40,8 +40,4 @@ public class MobileOperatorUtil {
                         .map(Enum::name)
         );
     }
-
-    public static boolean isSetMobileOperatorName(@NotNull MobileCommerce mobileCommerce) {
-        return mobileCommerce.isSetOperator() || mobileCommerce.isSetOperatorDeprecated();
-    }
 }

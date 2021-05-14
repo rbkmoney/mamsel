@@ -1,18 +1,12 @@
 package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.BankCard;
-import com.rbkmoney.damsel.domain.BankCardPaymentMethod;
 import com.rbkmoney.damsel.domain.LegacyBankCardPaymentSystem;
-import com.rbkmoney.damsel.domain.PaymentMethod;
-import com.rbkmoney.damsel.domain.PaymentSystemCondition;
 import com.rbkmoney.damsel.domain.PaymentSystemRef;
-import com.rbkmoney.damsel.domain.TokenizedBankCard;
 import com.rbkmoney.damsel.payment_tool_provider.CardInfo;
 import org.junit.jupiter.api.Test;
 
-
 import static com.rbkmoney.mamsel.PaymentSystemUtil.getPaymentSystemName;
-import static com.rbkmoney.mamsel.PaymentSystemUtil.isSetPaymentSystem;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,37 +78,5 @@ class PaymentSystemUtilTest {
                 LegacyBankCardPaymentSystem.ebt.name(),
                 getPaymentSystemName(new PaymentSystemRef(EMPTY), LegacyBankCardPaymentSystem.ebt)
         );
-    }
-
-    @Test
-    void isPaymentSystemSetTest_BankCard() {
-        BankCard nullObj = null;
-        assertThrows(NullPointerException.class, () -> PaymentSystemUtil.isSetPaymentSystem(nullObj));
-
-        BankCard card = new BankCard();
-        assertFalse(PaymentSystemUtil.isSetPaymentSystem(card));
-
-        card.setPaymentSystem(new PaymentSystemRef(REF));
-        assertTrue(PaymentSystemUtil.isSetPaymentSystem(card));
-
-        card = new BankCard();
-        card.setPaymentSystemDeprecated(LegacyBankCardPaymentSystem.ebt);
-        assertTrue(PaymentSystemUtil.isSetPaymentSystem(card));
-    }
-
-    @Test
-    void isPaymentSystemSetTest_CardInfo() {
-        CardInfo nullObj = null;
-        assertThrows(NullPointerException.class, () -> PaymentSystemUtil.isSetPaymentSystem(nullObj));
-
-        CardInfo cardInfo = new CardInfo();
-        assertFalse(PaymentSystemUtil.isSetPaymentSystem(cardInfo));
-
-        cardInfo.setPaymentSystem(new PaymentSystemRef(REF));
-        assertTrue(PaymentSystemUtil.isSetPaymentSystem(cardInfo));
-
-        cardInfo = new CardInfo();
-        cardInfo.setPaymentSystemDeprecated(LegacyBankCardPaymentSystem.ebt);
-        assertTrue(PaymentSystemUtil.isSetPaymentSystem(cardInfo));
     }
 }

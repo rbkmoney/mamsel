@@ -97,20 +97,4 @@ class CryptoCurrencyUtilTest {
         tool.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
         assertTrue(isSetCryptoCurrency(tool));
     }
-
-    @Test
-    void isSetCryptoCurrencyTest_CryptoWallet() {
-        CryptoWallet nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetCryptoCurrency(nullObj));
-
-        CryptoWallet wallet = new CryptoWallet();
-        assertFalse(isSetCryptoCurrency(wallet));
-
-        wallet.setCryptoCurrency(new CryptoCurrencyRef(REF));
-        assertTrue(isSetCryptoCurrency(wallet));
-
-        wallet = new CryptoWallet();
-        wallet.setCryptoCurrencyDeprecated(LegacyCryptoCurrency.bitcoin);
-        assertTrue(isSetCryptoCurrency(wallet));
-    }
 }
