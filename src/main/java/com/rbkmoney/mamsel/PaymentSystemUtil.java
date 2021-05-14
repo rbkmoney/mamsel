@@ -37,11 +37,13 @@ public class PaymentSystemUtil {
     public static Optional<String> getPaymentSystemNameIfPresent(
             PaymentSystemRef paymentSystemRef,
             LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
-        return Optional.ofNullable(paymentSystemRef)
-                .map(PaymentSystemRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> Optional.ofNullable(legacyBankCardPaymentSystem)
-                        .map(Enum::name));
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(paymentSystemRef)
+                        .map(PaymentSystemRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyBankCardPaymentSystem)
+                        .map(Enum::name)
+        );
     }
 
     public static boolean isSetPaymentSystem(@NotNull BankCard bankCard) {

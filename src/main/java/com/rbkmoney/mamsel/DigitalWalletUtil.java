@@ -32,11 +32,13 @@ public class DigitalWalletUtil {
     public static Optional<String> getDigitalWalletNameIfPresent(
             PaymentServiceRef paymentServiceRef,
             LegacyDigitalWalletProvider legacyDigitalWalletProvider) {
-        return Optional.ofNullable(paymentServiceRef)
-                .map(PaymentServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> Optional.ofNullable(legacyDigitalWalletProvider)
-                        .map(Enum::name));
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(paymentServiceRef)
+                        .map(PaymentServiceRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyDigitalWalletProvider)
+                        .map(Enum::name)
+        );
     }
 
     public static boolean isSetDigitalWallet(@NotNull DigitalWallet digitalWallet) {

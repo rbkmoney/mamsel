@@ -1,6 +1,9 @@
 package com.rbkmoney.mamsel;
 
-import com.rbkmoney.damsel.domain.*;
+import com.rbkmoney.damsel.domain.CryptoCurrencyRef;
+import com.rbkmoney.damsel.domain.CryptoWallet;
+import com.rbkmoney.damsel.domain.LegacyCryptoCurrency;
+import com.rbkmoney.damsel.domain.PaymentTool;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -34,12 +37,13 @@ public class CryptoCurrencyUtil {
 
     public static Optional<String> getCryptoCurrencyNameIfPresent(@NotNull PaymentTool paymentTool) {
         Optional<PaymentTool> tool = Optional.of(paymentTool);
-        return tool
-                .filter(PaymentTool::isSetCryptoCurrency)
-                .map(PaymentTool::getCryptoCurrency)
-                .map(CryptoCurrencyRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> tool
+        return OptionalExtension.isPresentOr(
+                () -> tool
+                        .filter(PaymentTool::isSetCryptoCurrency)
+                        .map(PaymentTool::getCryptoCurrency)
+                        .map(CryptoCurrencyRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> tool
                         .filter(PaymentTool::isSetCryptoCurrencyDeprecated)
                         .map(PaymentTool::getCryptoCurrencyDeprecated)
                         .map(Enum::name));
@@ -48,10 +52,11 @@ public class CryptoCurrencyUtil {
     public static Optional<String> getCryptoCurrencyNameIfPresent(
             CryptoCurrencyRef cryptoCurrencyRef,
             LegacyCryptoCurrency legacyCryptoCurrency) {
-        return Optional.ofNullable(cryptoCurrencyRef)
-                .map(CryptoCurrencyRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> Optional.ofNullable(legacyCryptoCurrency)
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(cryptoCurrencyRef)
+                        .map(CryptoCurrencyRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyCryptoCurrency)
                         .map(Enum::name));
     }
 

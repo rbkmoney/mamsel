@@ -34,11 +34,13 @@ public class TerminalPaymentUtil {
     public static Optional<String> getTerminalPaymentProviderNameIfPresent(
             PaymentServiceRef paymentServiceRef,
             LegacyTerminalPaymentProvider legacyTerminalPaymentProvider) {
-        return Optional.ofNullable(paymentServiceRef)
-                .map(PaymentServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> Optional.ofNullable(legacyTerminalPaymentProvider)
-                        .map(Enum::name));
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(paymentServiceRef)
+                        .map(PaymentServiceRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyTerminalPaymentProvider)
+                        .map(Enum::name)
+        );
     }
 
     public static boolean isSetTerminalPaymentProvider(@NotNull PaymentTerminal paymentTerminal) {

@@ -32,11 +32,13 @@ public class TokenProviderUtil {
     public static Optional<String> getTokenProviderNameIfPresent(
             BankCardTokenServiceRef bankCardTokenServiceRef,
             LegacyBankCardTokenProvider legacyBankCardTokenProvider) {
-        return Optional.ofNullable(bankCardTokenServiceRef)
-                .map(BankCardTokenServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> Optional.ofNullable(legacyBankCardTokenProvider)
-                        .map(Enum::name));
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(bankCardTokenServiceRef)
+                        .map(BankCardTokenServiceRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyBankCardTokenProvider)
+                        .map(Enum::name)
+        );
     }
 
     public static boolean isSetTokenProvider(@NotNull BankCard bankCard) {

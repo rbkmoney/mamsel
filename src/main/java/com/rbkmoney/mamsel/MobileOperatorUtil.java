@@ -32,11 +32,13 @@ public class MobileOperatorUtil {
     public static Optional<String> getMobileOperatorNameIfPresent(
             MobileOperatorRef mobileOperatorRef,
             LegacyMobileOperator legacyMobileOperator) {
-        return Optional.ofNullable(mobileOperatorRef)
-                .map(MobileOperatorRef::getId)
-                .filter(Predicate.not(StringUtils::isEmpty))
-                .or(() -> Optional.ofNullable(legacyMobileOperator)
-                        .map(Enum::name));
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(mobileOperatorRef)
+                        .map(MobileOperatorRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyMobileOperator)
+                        .map(Enum::name)
+        );
     }
 
     public static boolean isSetMobileOperatorName(@NotNull MobileCommerce mobileCommerce) {
