@@ -17,12 +17,19 @@ public class CryptoCurrencyUtil {
     private CryptoCurrencyUtil() {
     }
 
+    public static String getCryptoCurrencyName(@NotNull PaymentTool paymentTool) {
+        return getCryptoCurrencyNameIfPresent(paymentTool)
+                .orElse(null);
+    }
+
     public static String getCryptoCurrencyName(@NotNull CryptoWallet cryptoWallet) {
         return getCryptoCurrencyName(cryptoWallet.getCryptoCurrency(), cryptoWallet.getCryptoCurrencyDeprecated());
     }
 
-    public static String getCryptoCurrencyName(@NotNull PaymentTool paymentTool) {
-        return getCryptoCurrencyNameIfPresent(paymentTool)
+    public static String getCryptoCurrencyName(
+            CryptoCurrencyRef cryptoCurrencyRef,
+            LegacyCryptoCurrency legacyCryptoCurrency) {
+        return getCryptoCurrencyNameIfPresent(cryptoCurrencyRef, legacyCryptoCurrency)
                 .orElse(null);
     }
 
@@ -37,13 +44,6 @@ public class CryptoCurrencyUtil {
                         .filter(PaymentTool::isSetCryptoCurrencyDeprecated)
                         .map(PaymentTool::getCryptoCurrencyDeprecated)
                         .map(Enum::name));
-    }
-
-    public static String getCryptoCurrencyName(
-            CryptoCurrencyRef cryptoCurrencyRef,
-            LegacyCryptoCurrency legacyCryptoCurrency) {
-        return getCryptoCurrencyNameIfPresent(cryptoCurrencyRef, legacyCryptoCurrency)
-                .orElse(null);
     }
 
     public static Optional<String> getCryptoCurrencyNameIfPresent(
