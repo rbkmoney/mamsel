@@ -25,59 +25,44 @@ class MobileOperatorUtilTest {
         assertThrows(NullPointerException.class, () -> MobileOperatorUtil.getMobileOperatorName(nullCommerce));
 
         MobileCommerce commerce = new MobileCommerce();
-        assertTrue(MobileOperatorUtil.getMobileOperatorName(commerce).isEmpty());
+        assertNull(MobileOperatorUtil.getMobileOperatorName(commerce));
 
         commerce.setOperator(new MobileOperatorRef(REF));
-        assertEquals(REF, MobileOperatorUtil.getMobileOperatorName(commerce).get());
+        assertEquals(REF, MobileOperatorUtil.getMobileOperatorName(commerce));
 
         commerce.setOperator(null);
         commerce.setOperatorDeprecated(LegacyMobileOperator.mts);
-        assertEquals(LegacyMobileOperator.mts.name(), MobileOperatorUtil.getMobileOperatorName(commerce).get());
+        assertEquals(LegacyMobileOperator.mts.name(), MobileOperatorUtil.getMobileOperatorName(commerce));
 
         commerce.setOperator(new MobileOperatorRef(REF));
         commerce.setOperatorDeprecated(LegacyMobileOperator.mts);
-        assertEquals(REF, MobileOperatorUtil.getMobileOperatorName(commerce).get());
-    }
-
-    @Test
-    void getMobileOperatorNameTest_MobileCommerceConditionDefinition() {
-        MobileCommerceConditionDefinition nullDefinition = null;
-        assertThrows(NullPointerException.class, () -> MobileOperatorUtil.getMobileOperatorName(nullDefinition));
-
-        MobileCommerceConditionDefinition definition = new MobileCommerceConditionDefinition();
-        assertTrue(MobileOperatorUtil.getMobileOperatorName(definition).isEmpty());
-
-        definition.setOperatorIs(new MobileOperatorRef(REF));
-        assertEquals(REF, MobileOperatorUtil.getMobileOperatorName(definition).get());
-
-        definition.setOperatorIsDeprecated(LegacyMobileOperator.mts);
-        assertEquals(LegacyMobileOperator.mts.name(), MobileOperatorUtil.getMobileOperatorName(definition).get());
+        assertEquals(REF, MobileOperatorUtil.getMobileOperatorName(commerce));
     }
 
     @Test
     void getMobileOperatorNameTest() {
-        assertTrue(getMobileOperatorName(null, null).isEmpty());
-        assertTrue(getMobileOperatorName(new MobileOperatorRef(), null).isEmpty());
-        assertTrue(getMobileOperatorName(new MobileOperatorRef(EMPTY), null).isEmpty());
+        assertNull(getMobileOperatorName(null, null));
+        assertNull(getMobileOperatorName(new MobileOperatorRef(), null));
+        assertNull(getMobileOperatorName(new MobileOperatorRef(EMPTY), null));
         assertEquals(
                 REF,
-                getMobileOperatorName(new MobileOperatorRef(REF), null).get()
+                getMobileOperatorName(new MobileOperatorRef(REF), null)
         );
         assertEquals(
                 REF,
-                getMobileOperatorName(new MobileOperatorRef(REF), LegacyMobileOperator.mts).get()
+                getMobileOperatorName(new MobileOperatorRef(REF), LegacyMobileOperator.mts)
         );
         assertEquals(
                 LegacyMobileOperator.mts.name(),
-                getMobileOperatorName(null, LegacyMobileOperator.mts).get()
+                getMobileOperatorName(null, LegacyMobileOperator.mts)
         );
         assertEquals(
                 LegacyMobileOperator.mts.name(),
-                getMobileOperatorName(new MobileOperatorRef(), LegacyMobileOperator.mts).get()
+                getMobileOperatorName(new MobileOperatorRef(), LegacyMobileOperator.mts)
         );
         assertEquals(
                 LegacyMobileOperator.mts.name(),
-                getMobileOperatorName(new MobileOperatorRef(EMPTY), LegacyMobileOperator.mts).get()
+                getMobileOperatorName(new MobileOperatorRef(EMPTY), LegacyMobileOperator.mts)
         );
     }
 
@@ -95,21 +80,5 @@ class MobileOperatorUtilTest {
         commerce = new MobileCommerce();
         commerce.setOperatorDeprecated(LegacyMobileOperator.mts);
         assertTrue(isSetMobileOperatorName(commerce));
-    }
-
-    @Test
-    void isSetMobileOperatorTest_MobileCommerceConditionDefinition() {
-        MobileCommerceConditionDefinition nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetMobileOperatorName(nullObj));
-
-        MobileCommerceConditionDefinition definition = new MobileCommerceConditionDefinition();
-        assertFalse(isSetMobileOperatorName(definition));
-
-        definition.setOperatorIs(new MobileOperatorRef(REF));
-        assertTrue(isSetMobileOperatorName(definition));
-
-        definition = new MobileCommerceConditionDefinition();
-        definition.setOperatorIsDeprecated(LegacyMobileOperator.mts);
-        assertTrue(isSetMobileOperatorName(definition));
     }
 }

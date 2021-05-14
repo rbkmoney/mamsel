@@ -5,7 +5,7 @@ import com.rbkmoney.damsel.domain.LegacyBankCardPaymentSystem;
 import com.rbkmoney.damsel.domain.PaymentSystemCondition;
 import com.rbkmoney.damsel.domain.PaymentSystemRef;
 import com.rbkmoney.damsel.payment_tool_provider.CardInfo;
-import org.apache.commons.lang3.StringUtils;
+import com.rbkmoney.mamsel.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -22,21 +22,22 @@ public class PaymentSystemUtil {
     private PaymentSystemUtil() {
     }
 
-    public static Optional<String> getPaymentSystemName(@NotNull BankCard bankCard) {
+    public static String getPaymentSystemName(@NotNull BankCard bankCard) {
         return getPaymentSystemName(bankCard.getPaymentSystem(), bankCard.getPaymentSystemDeprecated());
     }
 
-    public static Optional<String> getPaymentSystemName(@NotNull PaymentSystemCondition paymentSystemCondition) {
-        return getPaymentSystemName(
-                paymentSystemCondition.getPaymentSystemIs(),
-                paymentSystemCondition.getPaymentSystemIsDeprecated());
-    }
-
-    public static Optional<String> getPaymentSystemName(@NotNull CardInfo cardInfo) {
+    public static String getPaymentSystemName(@NotNull CardInfo cardInfo) {
         return getPaymentSystemName(cardInfo.getPaymentSystem(), cardInfo.getPaymentSystemDeprecated());
     }
 
-    public static Optional<String> getPaymentSystemName(
+    public static String getPaymentSystemName(
+            PaymentSystemRef paymentSystemRef,
+            LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
+        return getPaymentSystemNameIfPresent(paymentSystemRef, legacyBankCardPaymentSystem)
+                .orElse(null);
+    }
+
+    public static Optional<String> getPaymentSystemNameIfPresent(
             PaymentSystemRef paymentSystemRef,
             LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
         return Optional.ofNullable(paymentSystemRef)
@@ -48,10 +49,6 @@ public class PaymentSystemUtil {
 
     public static boolean isSetPaymentSystem(@NotNull BankCard bankCard) {
         return bankCard.isSetPaymentSystem() || bankCard.isSetPaymentSystemDeprecated();
-    }
-
-    public static boolean isSetPaymentSystem(@NotNull PaymentSystemCondition paymentSystemCondition) {
-        return paymentSystemCondition.isSetPaymentSystemIs() || paymentSystemCondition.isSetPaymentSystemIsDeprecated();
     }
 
     public static boolean isSetPaymentSystem(@NotNull CardInfo cardInfo) {

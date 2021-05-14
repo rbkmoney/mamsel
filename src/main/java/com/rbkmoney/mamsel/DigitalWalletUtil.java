@@ -1,10 +1,8 @@
 package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.DigitalWallet;
-import com.rbkmoney.damsel.domain.DigitalWalletConditionDefinition;
 import com.rbkmoney.damsel.domain.LegacyDigitalWalletProvider;
 import com.rbkmoney.damsel.domain.PaymentServiceRef;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -21,25 +19,18 @@ public class DigitalWalletUtil {
     private DigitalWalletUtil() {
     }
 
-    public static Optional<String> getDigitalWalletName(@NotNull DigitalWallet digitalWallet) {
+    public static String getDigitalWalletName(@NotNull DigitalWallet digitalWallet) {
         return getDigitalWalletName(digitalWallet.getPaymentService(), digitalWallet.getProviderDeprecated());
     }
 
-    public static Optional<String> getDigitalWalletName(
-            @NotNull DigitalWalletConditionDefinition digitalWalletConditionDefinition) {
-        Optional<DigitalWalletConditionDefinition> definition = Optional.of(digitalWalletConditionDefinition);
-        return definition
-                .filter(DigitalWalletConditionDefinition::isSetPaymentServiceIs)
-                .map(DigitalWalletConditionDefinition::getPaymentServiceIs)
-                .map(PaymentServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
-                .or(() -> definition
-                        .filter(DigitalWalletConditionDefinition::isSetProviderIsDeprecated)
-                        .map(DigitalWalletConditionDefinition::getProviderIsDeprecated)
-                        .map(Enum::name));
+    public static String getDigitalWalletName(
+            PaymentServiceRef paymentServiceRef,
+            LegacyDigitalWalletProvider legacyDigitalWalletProvider) {
+        return getDigitalWalletNameIfPresent(paymentServiceRef, legacyDigitalWalletProvider)
+                .orElse(null);
     }
 
-    public static Optional<String> getDigitalWalletName(
+    public static Optional<String> getDigitalWalletNameIfPresent(
             PaymentServiceRef paymentServiceRef,
             LegacyDigitalWalletProvider legacyDigitalWalletProvider) {
         return Optional.ofNullable(paymentServiceRef)
@@ -51,11 +42,5 @@ public class DigitalWalletUtil {
 
     public static boolean isSetDigitalWallet(@NotNull DigitalWallet digitalWallet) {
         return digitalWallet.isSetPaymentService() || digitalWallet.isSetProviderDeprecated();
-    }
-
-    public static boolean isSetDigitalWallet(
-            @NotNull DigitalWalletConditionDefinition digitalWalletConditionDefinition) {
-        return digitalWalletConditionDefinition.isSetPaymentServiceIs()
-                || digitalWalletConditionDefinition.isSetProviderIsDeprecated();
     }
 }

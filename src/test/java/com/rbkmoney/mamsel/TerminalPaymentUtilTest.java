@@ -25,59 +25,44 @@ class TerminalPaymentUtilTest {
         assertThrows(NullPointerException.class, () -> getTerminalPaymentProviderName(nullTerminal));
 
         PaymentTerminal terminal = new PaymentTerminal();
-        assertTrue(getTerminalPaymentProviderName(terminal).isEmpty());
+        assertNull(getTerminalPaymentProviderName(terminal));
 
         terminal.setPaymentService(new PaymentServiceRef(REF));
-        assertEquals(REF, getTerminalPaymentProviderName(terminal).get());
+        assertEquals(REF, getTerminalPaymentProviderName(terminal));
 
         terminal.setPaymentService(null);
         terminal.setTerminalTypeDeprecated(LegacyTerminalPaymentProvider.uzcard);
-        assertEquals(LegacyTerminalPaymentProvider.uzcard.name(), getTerminalPaymentProviderName(terminal).get());
+        assertEquals(LegacyTerminalPaymentProvider.uzcard.name(), getTerminalPaymentProviderName(terminal));
 
         terminal.setPaymentService(new PaymentServiceRef(REF));
         terminal.setTerminalTypeDeprecated(LegacyTerminalPaymentProvider.uzcard);
-        assertEquals(REF, getTerminalPaymentProviderName(terminal).get());
-    }
-
-    @Test
-    void getTerminalPaymentProviderNameTest_PaymentTerminalConditionDefinition() {
-        PaymentTerminalConditionDefinition nullDefinition = null;
-        assertThrows(NullPointerException.class, () -> getTerminalPaymentProviderName(nullDefinition));
-
-        PaymentTerminalConditionDefinition definition = new PaymentTerminalConditionDefinition();
-        assertTrue(getTerminalPaymentProviderName(definition).isEmpty());
-
-        definition.setPaymentServiceIs(new PaymentServiceRef(REF));
-        assertEquals(REF, getTerminalPaymentProviderName(definition).get());
-
-        definition.setProviderIsDeprecated(LegacyTerminalPaymentProvider.uzcard);
-        assertEquals(LegacyTerminalPaymentProvider.uzcard.name(), getTerminalPaymentProviderName(definition).get());
+        assertEquals(REF, getTerminalPaymentProviderName(terminal));
     }
 
     @Test
     void getTerminalPaymentProviderNameTest() {
-        assertTrue(getTerminalPaymentProviderName(null, null).isEmpty());
-        assertTrue(getTerminalPaymentProviderName(new PaymentServiceRef(), null).isEmpty());
-        assertTrue(getTerminalPaymentProviderName(new PaymentServiceRef(EMPTY), null).isEmpty());
+        assertNull(getTerminalPaymentProviderName(null, null));
+        assertNull(getTerminalPaymentProviderName(new PaymentServiceRef(), null));
+        assertNull(getTerminalPaymentProviderName(new PaymentServiceRef(EMPTY), null));
         assertEquals(
                 REF,
-                getTerminalPaymentProviderName(new PaymentServiceRef(REF), null).get()
+                getTerminalPaymentProviderName(new PaymentServiceRef(REF), null)
         );
         assertEquals(
                 REF,
-                getTerminalPaymentProviderName(new PaymentServiceRef(REF), LegacyTerminalPaymentProvider.uzcard).get()
+                getTerminalPaymentProviderName(new PaymentServiceRef(REF), LegacyTerminalPaymentProvider.uzcard)
         );
         assertEquals(
                 LegacyTerminalPaymentProvider.uzcard.name(),
-                getTerminalPaymentProviderName(null, LegacyTerminalPaymentProvider.uzcard).get()
+                getTerminalPaymentProviderName(null, LegacyTerminalPaymentProvider.uzcard)
         );
         assertEquals(
                 LegacyTerminalPaymentProvider.uzcard.name(),
-                getTerminalPaymentProviderName(new PaymentServiceRef(), LegacyTerminalPaymentProvider.uzcard).get()
+                getTerminalPaymentProviderName(new PaymentServiceRef(), LegacyTerminalPaymentProvider.uzcard)
         );
         assertEquals(
                 LegacyTerminalPaymentProvider.uzcard.name(),
-                getTerminalPaymentProviderName(new PaymentServiceRef(EMPTY), LegacyTerminalPaymentProvider.uzcard).get()
+                getTerminalPaymentProviderName(new PaymentServiceRef(EMPTY), LegacyTerminalPaymentProvider.uzcard)
         );
     }
 
@@ -95,21 +80,5 @@ class TerminalPaymentUtilTest {
         method = new PaymentTerminal();
         method.setTerminalTypeDeprecated(LegacyTerminalPaymentProvider.uzcard);
         assertTrue(isSetTerminalPaymentProvider(method));
-    }
-
-    @Test
-    void isSetTerminalPaymentProviderTest_PaymentTerminalConditionDefinition() {
-        PaymentTerminalConditionDefinition nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetTerminalPaymentProvider(nullObj));
-
-        PaymentTerminalConditionDefinition definition = new PaymentTerminalConditionDefinition();
-        assertFalse(isSetTerminalPaymentProvider(definition));
-
-        definition.setPaymentServiceIs(new PaymentServiceRef(REF));
-        assertTrue(isSetTerminalPaymentProvider(definition));
-
-        definition = new PaymentTerminalConditionDefinition();
-        definition.setProviderIsDeprecated(LegacyTerminalPaymentProvider.uzcard);
-        assertTrue(isSetTerminalPaymentProvider(definition));
     }
 }

@@ -25,59 +25,44 @@ class DigitalWalletProviderUtilTest {
         assertThrows(NullPointerException.class, () -> getDigitalWalletName(nullWalltet));
 
         DigitalWallet wallet = new DigitalWallet();
-        assertTrue(getDigitalWalletName(wallet).isEmpty());
+        assertNull(getDigitalWalletName(wallet));
 
         wallet.setPaymentService(new PaymentServiceRef(REF));
-        assertEquals(REF, getDigitalWalletName(wallet).get());
+        assertEquals(REF, getDigitalWalletName(wallet));
 
         wallet.setPaymentService(null);
         wallet.setProviderDeprecated(LegacyDigitalWalletProvider.rbkmoney);
-        assertEquals(LegacyDigitalWalletProvider.rbkmoney.name(), getDigitalWalletName(wallet).get());
+        assertEquals(LegacyDigitalWalletProvider.rbkmoney.name(), getDigitalWalletName(wallet));
 
         wallet.setPaymentService(new PaymentServiceRef(REF));
         wallet.setProviderDeprecated(LegacyDigitalWalletProvider.rbkmoney);
-        assertEquals(REF, getDigitalWalletName(wallet).get());
-    }
-
-    @Test
-    void getDigitalWalletNameTest_DigitalWalletConditionDefinition() {
-        DigitalWalletConditionDefinition nullDefinition = null;
-        assertThrows(NullPointerException.class, () -> getDigitalWalletName(nullDefinition));
-
-        DigitalWalletConditionDefinition definition = new DigitalWalletConditionDefinition();
-        assertTrue(getDigitalWalletName(definition).isEmpty());
-
-        definition.setPaymentServiceIs(new PaymentServiceRef(REF));
-        assertEquals(REF, getDigitalWalletName(definition).get());
-
-        definition.setProviderIsDeprecated(LegacyDigitalWalletProvider.rbkmoney);
-        assertEquals(LegacyDigitalWalletProvider.rbkmoney.name(), getDigitalWalletName(definition).get());
+        assertEquals(REF, getDigitalWalletName(wallet));
     }
 
     @Test
     void getDigitalWalletNameTest() {
-        assertTrue(getDigitalWalletName(null, null).isEmpty());
-        assertTrue(getDigitalWalletName(new PaymentServiceRef(), null).isEmpty());
-        assertTrue(getDigitalWalletName(new PaymentServiceRef(EMPTY), null).isEmpty());
+        assertNull(getDigitalWalletName(null, null));
+        assertNull(getDigitalWalletName(new PaymentServiceRef(), null));
+        assertNull(getDigitalWalletName(new PaymentServiceRef(EMPTY), null));
         assertEquals(
                 REF,
-                getDigitalWalletName(new PaymentServiceRef(REF), null).get()
+                getDigitalWalletName(new PaymentServiceRef(REF), null)
         );
         assertEquals(
                 REF,
-                getDigitalWalletName(new PaymentServiceRef(REF), LegacyDigitalWalletProvider.rbkmoney).get()
+                getDigitalWalletName(new PaymentServiceRef(REF), LegacyDigitalWalletProvider.rbkmoney)
         );
         assertEquals(
                 LegacyDigitalWalletProvider.rbkmoney.name(),
-                getDigitalWalletName(null, LegacyDigitalWalletProvider.rbkmoney).get()
+                getDigitalWalletName(null, LegacyDigitalWalletProvider.rbkmoney)
         );
         assertEquals(
                 LegacyDigitalWalletProvider.rbkmoney.name(),
-                getDigitalWalletName(new PaymentServiceRef(), LegacyDigitalWalletProvider.rbkmoney).get()
+                getDigitalWalletName(new PaymentServiceRef(), LegacyDigitalWalletProvider.rbkmoney)
         );
         assertEquals(
                 LegacyDigitalWalletProvider.rbkmoney.name(),
-                getDigitalWalletName(new PaymentServiceRef(EMPTY), LegacyDigitalWalletProvider.rbkmoney).get()
+                getDigitalWalletName(new PaymentServiceRef(EMPTY), LegacyDigitalWalletProvider.rbkmoney)
         );
     }
 
@@ -95,21 +80,5 @@ class DigitalWalletProviderUtilTest {
         wallet = new DigitalWallet();
         wallet.setProviderDeprecated(LegacyDigitalWalletProvider.rbkmoney);
         assertTrue(isSetDigitalWallet(wallet));
-    }
-
-    @Test
-    void isSetDigitalWalletTest_DigitalWalletConditionDefinition() {
-        DigitalWalletConditionDefinition nullObj = null;
-        assertThrows(NullPointerException.class, () -> isSetDigitalWallet(nullObj));
-
-        DigitalWalletConditionDefinition definition = new DigitalWalletConditionDefinition();
-        assertFalse(isSetDigitalWallet(definition));
-
-        definition.setPaymentServiceIs(new PaymentServiceRef(REF));
-        assertTrue(isSetDigitalWallet(definition));
-
-        definition = new DigitalWalletConditionDefinition();
-        definition.setProviderIsDeprecated(LegacyDigitalWalletProvider.rbkmoney);
-        assertTrue(isSetDigitalWallet(definition));
     }
 }

@@ -4,7 +4,7 @@ import com.rbkmoney.damsel.domain.LegacyTerminalPaymentProvider;
 import com.rbkmoney.damsel.domain.PaymentServiceRef;
 import com.rbkmoney.damsel.domain.PaymentTerminal;
 import com.rbkmoney.damsel.domain.PaymentTerminalConditionDefinition;
-import org.apache.commons.lang3.StringUtils;
+import com.rbkmoney.mamsel.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -21,27 +21,20 @@ public class TerminalPaymentUtil {
     private TerminalPaymentUtil() {
     }
 
-    public static Optional<String> getTerminalPaymentProviderName(@NotNull PaymentTerminal paymentTerminal) {
+    public static String getTerminalPaymentProviderName(@NotNull PaymentTerminal paymentTerminal) {
         return getTerminalPaymentProviderName(
                 paymentTerminal.getPaymentService(),
                 paymentTerminal.getTerminalTypeDeprecated());
     }
 
-    public static Optional<String> getTerminalPaymentProviderName(
-            @NotNull PaymentTerminalConditionDefinition paymentTerminalConditionDefinition) {
-        Optional<PaymentTerminalConditionDefinition> definition = Optional.of(paymentTerminalConditionDefinition);
-        return definition
-                .filter(PaymentTerminalConditionDefinition::isSetPaymentServiceIs)
-                .map(PaymentTerminalConditionDefinition::getPaymentServiceIs)
-                .map(PaymentServiceRef::getId)
-                .filter(Predicate.not(StringUtils::isBlank))
-                .or(() -> definition
-                        .filter(PaymentTerminalConditionDefinition::isSetProviderIsDeprecated)
-                        .map(PaymentTerminalConditionDefinition::getProviderIsDeprecated)
-                        .map(Enum::name));
+    public static String getTerminalPaymentProviderName(
+            PaymentServiceRef paymentServiceRef,
+            LegacyTerminalPaymentProvider legacyTerminalPaymentProvider) {
+        return getTerminalPaymentProviderNameIfPresent(paymentServiceRef, legacyTerminalPaymentProvider)
+                .orElse(null);
     }
 
-    public static Optional<String> getTerminalPaymentProviderName(
+    public static Optional<String> getTerminalPaymentProviderNameIfPresent(
             PaymentServiceRef paymentServiceRef,
             LegacyTerminalPaymentProvider legacyTerminalPaymentProvider) {
         return Optional.ofNullable(paymentServiceRef)
@@ -53,11 +46,5 @@ public class TerminalPaymentUtil {
 
     public static boolean isSetTerminalPaymentProvider(@NotNull PaymentTerminal paymentTerminal) {
         return paymentTerminal.isSetPaymentService() || paymentTerminal.isSetTerminalTypeDeprecated();
-    }
-
-    public static boolean isSetTerminalPaymentProvider(
-            @NotNull PaymentTerminalConditionDefinition paymentTerminalConditionDefinition) {
-        return paymentTerminalConditionDefinition.isSetPaymentServiceIs()
-                || paymentTerminalConditionDefinition.isSetProviderIsDeprecated();
     }
 }

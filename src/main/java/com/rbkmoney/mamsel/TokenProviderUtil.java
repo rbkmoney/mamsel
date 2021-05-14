@@ -3,8 +3,6 @@ package com.rbkmoney.mamsel;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.BankCardTokenServiceRef;
 import com.rbkmoney.damsel.domain.LegacyBankCardTokenProvider;
-import com.rbkmoney.damsel.domain.PaymentSystemCondition;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -21,17 +19,18 @@ public class TokenProviderUtil {
     private TokenProviderUtil() {
     }
 
-    public static Optional<String> getTokenProviderName(@NotNull BankCard bankCard) {
+    public static String getTokenProviderName(@NotNull BankCard bankCard) {
         return getTokenProviderName(bankCard.getPaymentToken(), bankCard.getTokenProviderDeprecated());
     }
 
-    public static Optional<String> getTokenProviderName(@NotNull PaymentSystemCondition paymentSystemCondition) {
-        return getTokenProviderName(
-                paymentSystemCondition.getTokenServiceIs(),
-                paymentSystemCondition.getTokenProviderIsDeprecated());
+    public static String getTokenProviderName(
+            BankCardTokenServiceRef bankCardTokenServiceRef,
+            LegacyBankCardTokenProvider legacyBankCardTokenProvider) {
+        return getTokenProviderNameIfPresent(bankCardTokenServiceRef, legacyBankCardTokenProvider)
+                .orElse(null);
     }
 
-    public static Optional<String> getTokenProviderName(
+    public static Optional<String> getTokenProviderNameIfPresent(
             BankCardTokenServiceRef bankCardTokenServiceRef,
             LegacyBankCardTokenProvider legacyBankCardTokenProvider) {
         return Optional.ofNullable(bankCardTokenServiceRef)
@@ -43,9 +42,5 @@ public class TokenProviderUtil {
 
     public static boolean isSetTokenProvider(@NotNull BankCard bankCard) {
         return bankCard.isSetPaymentToken() || bankCard.isSetTokenProviderDeprecated();
-    }
-
-    public static boolean isSetTokenProvider(@NotNull PaymentSystemCondition paymentSystemCondition) {
-        return paymentSystemCondition.isSetTokenServiceIs() || paymentSystemCondition.isSetTokenProviderIsDeprecated();
     }
 }
