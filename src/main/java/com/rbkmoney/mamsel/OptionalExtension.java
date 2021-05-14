@@ -16,8 +16,8 @@ public interface OptionalExtension {
      *                              produces a {@code null} result
      */
     static <T> Optional<T> isPresentOr(
-            Supplier<? extends Optional<T>> supplierMain,
-            Supplier<? extends Optional<T>> supplierAdditional) {
+            Supplier<Optional<T>> supplierMain,
+            Supplier<Optional<T>> supplierAdditional) {
         Optional<T> optionalMain = Objects.requireNonNull(supplierMain.get());
         return optionalMain.isPresent()
                 ? optionalMain
