@@ -40,9 +40,4 @@ public class TokenProviderUtil {
                         .map(Enum::name)
         );
     }
-
-    public static boolean isTokenProviderNameExist(@NotNull BankCard bankCard) {
-        return getTokenProviderNameIfPresent(bankCard.getPaymentToken(), bankCard.getTokenProviderDeprecated())
-                .isPresent();
-    }
 }
