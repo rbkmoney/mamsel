@@ -7,6 +7,7 @@ public class StringUtils {
 
     /**
      * Checks if string is null or empty.
+     *
      * @param s input string
      */
     static boolean isEmpty(String s) {

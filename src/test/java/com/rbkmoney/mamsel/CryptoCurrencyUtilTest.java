@@ -1,10 +1,8 @@
 package com.rbkmoney.mamsel;
 
-import com.rbkmoney.damsel.domain.CryptoCurrencyConditionDefinition;
-import com.rbkmoney.damsel.domain.LegacyCryptoCurrency;
-import com.rbkmoney.damsel.domain.CryptoWallet;
 import com.rbkmoney.damsel.domain.CryptoCurrencyRef;
-import com.rbkmoney.damsel.domain.PaymentMethod;
+import com.rbkmoney.damsel.domain.CryptoWallet;
+import com.rbkmoney.damsel.domain.LegacyCryptoCurrency;
 import com.rbkmoney.damsel.domain.PaymentTool;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +10,7 @@ import static com.rbkmoney.mamsel.CryptoCurrencyUtil.getCryptoCurrencyName;
 import static com.rbkmoney.mamsel.CryptoCurrencyUtil.isSetCryptoCurrency;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CryptoCurrencyUtilTest {
 

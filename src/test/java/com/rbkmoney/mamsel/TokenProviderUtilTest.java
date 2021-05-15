@@ -1,21 +1,14 @@
 package com.rbkmoney.mamsel;
 
 import com.rbkmoney.damsel.domain.BankCard;
-import com.rbkmoney.damsel.domain.BankCardPaymentMethod;
 import com.rbkmoney.damsel.domain.BankCardTokenServiceRef;
 import com.rbkmoney.damsel.domain.LegacyBankCardTokenProvider;
-import com.rbkmoney.damsel.domain.PaymentSystemCondition;
-import com.rbkmoney.damsel.domain.TokenizedBankCard;
 import org.junit.jupiter.api.Test;
 
 import static com.rbkmoney.mamsel.TokenProviderUtil.getTokenProviderName;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TokenProviderUtilTest {
 
