@@ -45,11 +45,11 @@ public class PaymentSystemUtil {
     public static String getFistfulPaymentSystemName(
             com.rbkmoney.fistful.base.PaymentSystemRef paymentSystemRef,
             com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
-        return getFistfullPaymentSystemNameIfPresent(paymentSystemRef, legacyBankCardPaymentSystem)
+        return getFistfulPaymentSystemNameIfPresent(paymentSystemRef, legacyBankCardPaymentSystem)
                 .orElse(null);
     }
 
-    public static Optional<String> getFistfullPaymentSystemNameIfPresent(
+    public static Optional<String> getFistfulPaymentSystemNameIfPresent(
             com.rbkmoney.fistful.base.PaymentSystemRef paymentSystemRef,
             com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
         return OptionalExtension.isPresentOr(
