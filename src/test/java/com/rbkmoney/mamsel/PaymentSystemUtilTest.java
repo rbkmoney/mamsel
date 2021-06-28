@@ -6,6 +6,7 @@ import com.rbkmoney.damsel.domain.PaymentSystemRef;
 import com.rbkmoney.damsel.payment_tool_provider.CardInfo;
 import org.junit.jupiter.api.Test;
 
+import static com.rbkmoney.mamsel.PaymentSystemUtil.getFistfullPaymentSystemName;
 import static com.rbkmoney.mamsel.PaymentSystemUtil.getPaymentSystemName;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
@@ -77,6 +78,37 @@ class PaymentSystemUtilTest {
         assertEquals(
                 LegacyBankCardPaymentSystem.ebt.name(),
                 getPaymentSystemName(new PaymentSystemRef(EMPTY), LegacyBankCardPaymentSystem.ebt)
+        );
+    }
+
+    @Test
+    void getFistfullPaymentSystemNameTest() {
+        assertNull(getFistfullPaymentSystemName(null, null));
+        assertNull(getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(), null));
+        assertNull(getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY), null));
+        assertEquals(
+                REF,
+                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF), null)
+        );
+        assertEquals(
+                REF,
+                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF),
+                        com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
+        );
+        assertEquals(
+                LegacyBankCardPaymentSystem.ebt.name(),
+                getFistfullPaymentSystemName(null,
+                        com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
+        );
+        assertEquals(
+                LegacyBankCardPaymentSystem.ebt.name(),
+                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(),
+                        com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
+        );
+        assertEquals(
+                LegacyBankCardPaymentSystem.ebt.name(),
+                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY),
+                        com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
         );
     }
 }

@@ -38,6 +38,29 @@ public class PaymentSystemUtil {
                 .orElse(null);
     }
 
+    public static String getFistfullPaymentSystemName(@NotNull com.rbkmoney.fistful.base.BankCard bankCard) {
+        return getFistfullPaymentSystemName(bankCard.getPaymentSystem(), bankCard.getPaymentSystemDeprecated());
+    }
+
+    public static String getFistfullPaymentSystemName(
+            com.rbkmoney.fistful.base.PaymentSystemRef paymentSystemRef,
+            com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
+        return getFistfullPaymentSystemNameIfPresent(paymentSystemRef, legacyBankCardPaymentSystem)
+                .orElse(null);
+    }
+
+    public static Optional<String> getFistfullPaymentSystemNameIfPresent(
+            com.rbkmoney.fistful.base.PaymentSystemRef paymentSystemRef,
+            com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
+        return OptionalExtension.isPresentOr(
+                () -> Optional.ofNullable(paymentSystemRef)
+                        .map(com.rbkmoney.fistful.base.PaymentSystemRef::getId)
+                        .filter(Predicate.not(StringUtils::isEmpty)),
+                () -> Optional.ofNullable(legacyBankCardPaymentSystem)
+                        .map(Enum::name)
+        );
+    }
+
     public static Optional<String> getPaymentSystemNameIfPresent(
             PaymentSystemRef paymentSystemRef,
             LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
