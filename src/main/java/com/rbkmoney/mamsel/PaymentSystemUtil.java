@@ -38,11 +38,11 @@ public class PaymentSystemUtil {
                 .orElse(null);
     }
 
-    public static String getFistfullPaymentSystemName(@NotNull com.rbkmoney.fistful.base.BankCard bankCard) {
-        return getFistfullPaymentSystemName(bankCard.getPaymentSystem(), bankCard.getPaymentSystemDeprecated());
+    public static String getFistfulPaymentSystemName(@NotNull com.rbkmoney.fistful.base.BankCard bankCard) {
+        return getFistfulPaymentSystemName(bankCard.getPaymentSystem(), bankCard.getPaymentSystemDeprecated());
     }
 
-    public static String getFistfullPaymentSystemName(
+    public static String getFistfulPaymentSystemName(
             com.rbkmoney.fistful.base.PaymentSystemRef paymentSystemRef,
             com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem legacyBankCardPaymentSystem) {
         return getFistfullPaymentSystemNameIfPresent(paymentSystemRef, legacyBankCardPaymentSystem)

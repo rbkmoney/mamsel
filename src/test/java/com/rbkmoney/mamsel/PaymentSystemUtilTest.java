@@ -6,7 +6,7 @@ import com.rbkmoney.damsel.domain.PaymentSystemRef;
 import com.rbkmoney.damsel.payment_tool_provider.CardInfo;
 import org.junit.jupiter.api.Test;
 
-import static com.rbkmoney.mamsel.PaymentSystemUtil.getFistfullPaymentSystemName;
+import static com.rbkmoney.mamsel.PaymentSystemUtil.getFistfulPaymentSystemName;
 import static com.rbkmoney.mamsel.PaymentSystemUtil.getPaymentSystemName;
 import static com.rbkmoney.mamsel.util.TestConstants.EMPTY;
 import static com.rbkmoney.mamsel.util.TestConstants.REF;
@@ -82,32 +82,33 @@ class PaymentSystemUtilTest {
     }
 
     @Test
-    void getFistfullPaymentSystemNameTest() {
-        assertNull(getFistfullPaymentSystemName(null, null));
-        assertNull(getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(), null));
-        assertNull(getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY), null));
+    void getFistfulPaymentSystemNameTest() {
+        assertNull(PaymentSystemUtil.getFistfulPaymentSystemName(null, null));
+        assertNull(PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(), null));
+        assertNull(PaymentSystemUtil
+                .getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY), null));
         assertEquals(
                 REF,
-                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF), null)
+                PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF), null)
         );
         assertEquals(
                 REF,
-                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF),
+                PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF),
                         com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
         );
         assertEquals(
                 LegacyBankCardPaymentSystem.ebt.name(),
-                getFistfullPaymentSystemName(null,
+                PaymentSystemUtil.getFistfulPaymentSystemName(null,
                         com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
         );
         assertEquals(
                 LegacyBankCardPaymentSystem.ebt.name(),
-                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(),
+                PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(),
                         com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
         );
         assertEquals(
                 LegacyBankCardPaymentSystem.ebt.name(),
-                getFistfullPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY),
+                PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY),
                         com.rbkmoney.fistful.base.LegacyBankCardPaymentSystem.ebt)
         );
     }
