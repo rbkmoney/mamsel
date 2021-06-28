@@ -84,12 +84,15 @@ class PaymentSystemUtilTest {
     @Test
     void getFistfulPaymentSystemNameTest() {
         assertNull(PaymentSystemUtil.getFistfulPaymentSystemName(null, null));
-        assertNull(PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(), null));
+        assertNull(PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(),
+                null));
         assertNull(PaymentSystemUtil
-                .getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY), null));
+                .getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(EMPTY),
+                        null));
         assertEquals(
                 REF,
-                PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF), null)
+                PaymentSystemUtil.getFistfulPaymentSystemName(new com.rbkmoney.fistful.base.PaymentSystemRef(REF),
+                        null)
         );
         assertEquals(
                 REF,
